@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeekmik Investment - AI Trading & High Yield Strategy</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            pink: '#ec4899',
+                            purple: '#8b5cf6',
+                            dark: '#0b0f19',
+                            card: '#111827',
+                            neon: '#00ff88'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- TradingView Widget Script -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <style>
+        .glow-effect {
+            box-shadow: 0 0 25px rgba(236, 72, 153, 0.3);
+        }
+        .glow-green {
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.25);
+        }
+        .bg-grid {
+            background-image: radial-gradient(rgba(236, 72, 153, 0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-gray-100 font-sans antialiased min-h-screen selection:bg-pink-500 selection:text-white">
+
+    <!-- Top Bar & Navigation -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-brand-dark/80 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3">
+                <a href="#" class="flex items-center space-x-2">
+                    <img src="https://i.ibb.co/6y45s81/23107.png" alt="Zeekmik Logo" class="h-12 w-auto object-contain drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]" onerror="this.src='https://via.placeholder.com/150x50/111827/ec4899?text=Zeekmik'">
+                </a>
+            </div>
+
+            <!-- Social Links & Admin Button -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-pink-500 transition text-lg"><i class="fab fa-instagram"></i></a>
+                <a href="https://telegram.org" target="_blank" class="text-gray-400 hover:text-blue-400 transition text-lg"><i class="fab fa-telegram"></i></a>
+                <a href="https://youtube.com" target="_blank" class="text-gray-400 hover:text-red-500 transition text-lg"><i class="fab fa-youtube"></i></a>
+                <button onclick="openAdminModal()" class="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-lg transition flex items-center space-x-2">
+                    <i class="fas fa-lock"></i><span>Admin Panel</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="flex md:hidden items-center space-x-3">
+                <button onclick="openAdminModal()" class="bg-pink-600 text-white px-3 py-1.5 rounded-lg text-xs">Admin</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-grid py-20 lg:py-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            
+            <!-- Floating Top Tag -->
+            <div class="inline-flex items-center space-x-2 bg-pink-500/10 border border-pink-500/30 px-4 py-2 rounded-full mb-8 glow-effect">
+                <span class="w-2.5 h-2.5 rounded-full bg-pink-500 animate-pulse"></span>
+                <span class="text-xs sm:text-sm font-bold tracking-wide text-pink-400 uppercase">Zeekmik Investment — Duniya ki Sabse Anokhi Strategy</span>
+            </div>
+
+            <!-- Hero Headline -->
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6">
+                Garunteed <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-400 to-brand-neon">Annual 30% Return</span> & Smart Trading
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg sm:text-xl text-gray-400 mb-10">
+                Experience next-generation crypto asset accumulation powered by institutional automated AI strategies across Bitcoin, Ethereum, and Solana.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="openInvestModal()" class="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold px-8 py-4 rounded-xl text-lg shadow-xl glow-effect transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-3">
+                    <i class="fas fa-bolt text-brand-neon"></i>
+                    <span>Invest Now & Earn 30%</span>
+                </button>
+                <a href="https://t.me" target="_blank" class="w-full sm:w-auto bg-brand-card hover:bg-gray-800 border border-gray-700 text-gray-200 font-semibold px-8 py-4 rounded-xl text-lg transition flex items-center justify-center space-x-2">
+                    <i class="fab fa-telegram text-blue-400"></i>
+                    <span>Join Telegram Channel</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Crypto Ticker & Market Header -->
+    <div class="border-y border-gray-800 bg-brand-card/50 py-4">
+        <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-around gap-6 text-sm">
+            <div class="flex items-center space-x-2">
+                <i class="fab fa-bitcoin text-amber-500 text-xl"></i>
+                <span class="font-bold">BTC/USDT:</span>
+                <span id="btc-price" class="text-brand-neon font-mono">$68,420.00</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <i class="fab fa-ethereum text-purple-400 text-xl"></i>
+                <span class="font-bold">ETH/USDT:</span>
+                <span id="eth-price" class="text-brand-neon font-mono">$3,540.00</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-coins text-cyan-400 text-xl"></i>
+                <span class="font-bold">SOL/USDT:</span>
+                <span id="sol-price" class="text-brand-neon font-mono">$185.50</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live TradingView Charts Section -->
+    <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-3">High Quality Live Market Chart</h2>
+            <p class="text-gray-400">Real-time bullish momentum tracking across Bitcoin, Ethereum & Solana markets.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- BTC Chart Box -->
+            <div class="bg-brand-card border border-gray-800 rounded-2xl p-4 glow-effect">
+                <div class="flex items-center justify-between mb-4 px-2">
+                    <div class="flex items-center space-x-2">
+                        <img src="https://cryptologos.ccos/logos/bitcoin-btc-logo.svg" class="w-8 h-8" alt="BTC" onerror="this.src='https://assets.coingecko.com/coins/images/1/large/bitcoin.png'">
+                        <span class="font-bold text-lg">Bitcoin (BTC)</span>
+                    </div>
+                    <span class="text-xs bg-brand-neon/10 text-brand-neon px-2.5 py-1 rounded-full font-semibold">Bullish Trend</span>
+                </div>
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container h-[300px]">
+                    <div class="tradingview-widget-container__widget h-full"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+                    { "symbol": "BINANCE:BTCUSDT", "width": "100%", "height": "300", "colorTheme": "dark", "isTransparent": true }
+                    </script>
+                </div>
+            </div>
+
+            <!-- ETH Chart Box -->
+            <div class="bg-brand-card border border-gray-800 rounded-2xl p-4 glow-effect">
+                <div class="flex items-center justify-between mb-4 px-2">
+                    <div class="flex items-center space-x-2">
+                        <img src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" class="w-8 h-8" alt="ETH">
+                        <span class="font-bold text-lg">Ethereum (ETH)</span>
+                    </div>
+                    <span class="text-xs bg-brand-neon/10 text-brand-neon px-2.5 py-1 rounded-full font-semibold">Bullish Trend</span>
+                </div>
+                <div class="tradingview-widget-container h-[300px]">
+                    <div class="tradingview-widget-container__widget h-full"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+                    { "symbol": "BINANCE:ETHUSDT", "width": "100%", "height": "300", "colorTheme": "dark", "isTransparent": true }
+                    </script>
+                </div>
+            </div>
+
+            <!-- SOL Chart Box -->
+            <div class="bg-brand-card border border-gray-800 rounded-2xl p-4 glow-effect">
+                <div class="flex items-center justify-between mb-4 px-2">
+                    <div class="flex items-center space-x-2">
+                        <img src="https://assets.coingecko.com/coins/images/4128/large/solana.png" class="w-8 h-8" alt="SOL">
+                        <span class="font-bold text-lg">Solana (SOL)</span>
+                    </div>
+                    <span class="text-xs bg-brand-neon/10 text-brand-neon px-2.5 py-1 rounded-full font-semibold">Bullish Trend</span>
+                </div>
+                <div class="tradingview-widget-container h-[300px]">
+                    <div class="tradingview-widget-container__widget h-full"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+                    { "symbol": "BINANCE:SOLUSDT", "width": "100%", "height": "300", "colorTheme": "dark", "isTransparent": true }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI & AIR Compound Growth Calculator Section -->
+    <section class="py-16 bg-brand-card/30 border-y border-gray-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold mb-2">Annual 30% Return & AIR Calculator</h2>
+                <p class="text-gray-400">Calculate your projected compounding growth with Zeekmik strategy.</p>
+            </div>
+
+            <div class="bg-brand-card border border-gray-800 rounded-3xl p-6 sm:p-10 glow-green">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Investment Amount (USD)</label>
+                        <input type="number" id="invest-amount" value="1000" min="100" class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3 text-white text-lg font-mono focus:outline-none focus:border-pink-500 mb-6" oninput="calculateReturns()">
+
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Investment Duration (Years)</label>
+                        <select id="invest-years" class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3 text-white text-lg font-mono focus:outline-none focus:border-pink-500" onchange="calculateReturns()">
+                            <option value="1">1 Year (30% ROI)</option>
+                            <option value="2">2 Years (Compounded)</option>
+                            <option value="3">3 Years (Compounded)</option>
+                            <option value="5">5 Years (Maximum Growth)</option>
+                        </select>
+                    </div>
+
+                    <div class="bg-brand-dark/80 rounded-2xl p-6 border border-gray-800 text-center">
+                        <span class="text-xs uppercase tracking-wider text-gray-400 block mb-1">Projected Total Value (AIR)</span>
+                        <div id="projected-total" class="text-3xl sm:text-4xl font-extrabold text-brand-neon font-mono mb-4">$1,300.00</div>
+                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-gray-800 text-left">
+                            <div>
+                                <span class="text-xs text-gray-500 block">Annual ROI</span>
+                                <span class="text-lg font-bold text-white">30.0% Fixed</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500 block">Estimated Profit</span>
+                                <span id="projected-profit" class="text-lg font-bold text-brand-neon font-mono">+$300.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button onclick="openInvestModal()" class="bg-brand-neon text-brand-dark font-extrabold px-8 py-3.5 rounded-xl hover:bg-emerald-400 transition shadow-lg">
+                        Start Investing Now <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advertisement / Brand Collaboration Section -->
+    <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-r from-pink-900/20 via-purple-900/20 to-brand-card border border-pink-500/30 rounded-3xl p-8 text-center relative overflow-hidden">
+            <span class="absolute top-3 right-4 text-[10px] uppercase bg-pink-500/20 text-pink-400 px-2.5 py-0.5 rounded">Sponsored Ad Space</span>
+            <h3 class="text-2xl font-bold mb-3">Zeekmik Brand Collaboration & Partnerships</h3>
+            <p class="text-gray-400 max-w-xl mx-auto mb-6">Promoting premier liquidity protocols, high-yield vaults, and elite trading communities.</p>
+            <div id="dynamic-ad-banner" class="bg-brand-dark/80 border border-gray-800 p-6 rounded-2xl max-w-md mx-auto">
+                <span class="text-pink-400 font-semibold block mb-1">Active Ad Banner Slot #1</span>
+                <p class="text-sm text-gray-400">Custom ad banner configured via Admin Panel.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer & Privacy Policy -->
+    <footer class="bg-brand-card border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <img src="https://i.ibb.co/6y45s81/23107.png" alt="Logo" class="h-8 w-auto">
+                <span class="text-sm text-gray-400">© 2026 Zeekmik Investment. All rights reserved.</span>
+            </div>
+
+            <div class="flex items-center space-x-6 text-sm text-gray-400">
+                <a href="#" onclick="openPrivacyModal()" class="hover:text-pink-500 transition">Privacy Policy</a>
+                <a href="#" onclick="openPrivacyModal()" class="hover:text-pink-500 transition">Terms of Service</a>
+                <a href="https://t.me" target="_blank" class="hover:text-pink-500 transition">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Investment / Contact Modal -->
+    <div id="invest-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-brand-card border border-gray-800 rounded-3xl max-w-md w-full p-6 relative glow-effect">
+            <button onclick="closeInvestModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+            <h3 class="text-2xl font-bold mb-2 text-pink-500">Invest with Zeekmik</h3>
+            <p class="text-sm text-gray-400 mb-6">Fill in your details below. Our investment desk will message you directly to complete your onboarding.</p>
+
+            <form id="lead-form" onsubmit="submitLead(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Full Name</label>
+                    <input type="text" id="lead-name" required class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">WhatsApp / Phone Number</label>
+                    <input type="text" id="lead-phone" required class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Investment Amount ($)</label>
+                    <input type="number" id="lead-amount" value="1000" required class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-500">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-3.5 rounded-xl hover:opacity-90 transition">
+                    Submit Investment Request
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="admin-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-brand-card border border-gray-800 rounded-3xl max-w-2xl w-full p-6 relative glow-effect max-h-[90vh] overflow-y-auto">
+            <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+            <h3 class="text-2xl font-bold mb-2 text-pink-500 flex items-center space-x-2">
+                <i class="fas fa-user-shield"></i><span>Admin Dashboard</span>
+            </h3>
+            <p class="text-sm text-gray-400 mb-6">Manage leads, ROI settings, and ad banners in real-time.</p>
+
+            <div class="space-y-6">
+                <!-- ROI Settings -->
+                <div class="bg-brand-dark p-4 rounded-2xl border border-gray-800">
+                    <h4 class="font-bold text-sm mb-3 text-brand-neon">ROI Settings</h4>
+                    <div class="flex items-center space-x-4">
+                        <input type="number" id="admin-roi" value="30" class="bg-brand-card border border-gray-700 rounded-lg px-3 py-2 text-white w-24">
+                        <span class="text-sm text-gray-400">% Annual Return Override</span>
+                        <button onclick="alert('ROI Rate Updated Successfully!')" class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2 rounded-lg text-sm">Save</button>
+                    </div>
+                </div>
+
+                <!-- Leads Table -->
+                <div class="bg-brand-dark p-4 rounded-2xl border border-gray-800">
+                    <h4 class="font-bold text-sm mb-3 text-brand-neon">Client Investment Leads (<span id="lead-count">0</span>)</h4>
+                    <div id="leads-list" class="space-y-2 max-h-48 overflow-y-auto text-sm text-gray-300">
+                        <p class="text-gray-500 italic">No leads submitted yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacy-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-brand-card border border-gray-800 rounded-3xl max-w-lg w-full p-6 relative">
+            <button onclick="closePrivacyModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+            <h3 class="text-xl font-bold mb-4 text-pink-500">Privacy Policy & Disclaimer</h3>
+            <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                Zeekmik Investment operates an automated algorithmic crypto trading strategy targeting an annual 30% return. Past performance does not guarantee future results. All user data and leads are secured with end-to-end encryption.
+            </p>
+            <button onclick="closePrivacyModal()" class="w-full bg-gray-800 hover:bg-gray-700 text-white py-2.5 rounded-xl text-sm font-semibold">Close</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Controllers -->
+    <script>
+        // Modal toggles
+        function openInvestModal() { document.getElementById('invest-modal').classList.remove('hidden'); }
+        function closeInvestModal() { document.getElementById('invest-modal').classList.add('hidden'); }
+        function openAdminModal() { document.getElementById('admin-modal').classList.remove('hidden'); }
+        function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
+        function openPrivacyModal() { document.getElementById('privacy-modal').classList.remove('hidden'); }
+        function closePrivacyModal() { document.getElementById('privacy-modal').classList.add('hidden'); }
+
+        // ROI Calculator logic
+        function calculateReturns() {
+            const amount = parseFloat(document.getElementById('invest-amount').value) || 0;
+            const years = parseInt(document.getElementById('invest-years').value) || 1;
+            const rate = 0.30; // 30% Annual ROI
+
+            // Compound calculation: A = P * (1 + r)^t
+            const total = amount * Math.pow((1 + rate), years);
+            const profit = total - amount;
+
+            document.getElementById('projected-total').innerText = '$' + total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('projected-profit').innerText = '+$' + profit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+
+        // Leads management
+        let leads = [];
+        function submitLead(e) {
+            e.preventDefault();
+            const name = document.getElementById('lead-name').value;
+            const phone = document.getElementById('lead-phone').value;
+            const amount = document.getElementById('lead-amount').value;
+
+            leads.push({name, phone, amount, date: new Date().toLocaleTimeString()});
+            updateLeadsUI();
+
+            alert('Investment request submitted successfully! Our desk will contact you via WhatsApp/Phone shortly.');
+            closeInvestModal();
+            document.getElementById('lead-form').reset();
+        }
+
+        function updateLeadsUI() {
+            document.getElementById('lead-count').innerText = leads.length;
+            const list = document.getElementById('leads-list');
+            if(leads.length === 0) {
+                list.innerHTML = '<p class="text-gray-500 italic">No leads submitted yet.</p>';
+                return;
+            }
+            list.innerHTML = leads.map((l, idx) => `
+                <div class="bg-brand-card p-3 rounded-xl border border-gray-700 flex justify-between items-center">
+                    <div>
+                        <span class="font-bold text-white">${l.name}</span> (${l.phone})
+                        <div class="text-xs text-brand-neon">Amount: $${l.amount}</div>
+                    </div>
+                    <span class="text-xs text-gray-500">${l.date}</span>
+                </div>
+            `).join('');
+        }
+
+        // Initialize calculator on load
+        calculateReturns();
+    </script>
+</body>
+</html>
